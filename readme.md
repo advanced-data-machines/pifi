@@ -1,10 +1,12 @@
 # How to use the WiFi on your Raspberry Pi to broadcast a provisioning network
 
-cat /etc/os-releases
+These instructions present updates to the excellent artical found [here](https://thepi.io/how-to-use-your-raspberry-pi-as-a-wireless-access-point/) in order to work with the Raspberry Pi B 3 Plus
+
 
 ## Prerequisites
-
+The following software is used:
 ```
+cat /etc/os-releases
 Raspbian Buster
 
 hostapd v2.8-devel
@@ -79,7 +81,22 @@ mv  /etc/default/hostapd /etc/default/hostapd.orig
 cp [workingdir]/pifi/etc/default/hostapd /etc/default/hostapd
 ```
 
-At this point you should be able to connect to the Wifi network that will broadcasting from you Raspberry Pi
+## Debug 
+
+Debug your setup by running the following command manuall:
+```
+sudo hostapd /etc/hostapd/hostapd.conf
+```
+
+Any errors will be reported to the console and you should be able to watch individual devices associate and disassociate.  While the above command is running,  you should be able to connect to the Wifi network that will broadcasting from you Raspberry Pi
+
+Once your comfortable, start your services via systemctl:
+
+```
+sudo systemctl start hostapd
+sudo systemctl start dnsmasq
+```
+
 
 At this point  you will not be able to pass traffic but you can now run a web server or ssh into your IoT device and configure it etc.
 
